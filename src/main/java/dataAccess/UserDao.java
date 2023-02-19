@@ -1,6 +1,8 @@
 package dataAccess;
 
 import model.User;
+import model.Event;
+import model.Person;
 
 import java.sql.*;
 
@@ -65,6 +67,34 @@ public class UserDao {
             e.printStackTrace();
             throw new DataAccessException("Error encountered while finding a user in the database");
         }
+    }
+
+    /**
+     * Validates username and password association for user logging in
+     * @param username String
+     * @param password String
+     * @return boolean
+     * @throws DataAccessException
+     */
+    //TODO: TEST THIS
+    public boolean validate(String username, String password) throws DataAccessException {
+        String foundPassword;
+        ResultSet rs;
+        String sql = "SELECT * FROM Users WHERE username = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                foundPassword = rs.getString("Password");
+            } else {
+                return false;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while validating username and password in the database");
+        }
+        return password.equals(foundPassword);
     }
 
     /**

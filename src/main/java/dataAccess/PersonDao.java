@@ -1,8 +1,12 @@
 package dataAccess;
 
 import model.Person;
+import model.Event;
+import model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonDao {
     /**
@@ -65,6 +69,35 @@ public class PersonDao {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DataAccessException("Error encountered while finding a person in the database");
+        }
+    }
+
+    /**
+     * Returns a list of all persons associated with a username
+     * @param username String
+     * @return List<Person>
+     * @throws DataAccessException
+     */
+    //TODO:IMPLEMENT THIS
+    public List<Person> getPersonsForUser(String username) throws DataAccessException {
+        List<Person> persons = new ArrayList<>();
+
+        return persons;
+    }
+
+    /**
+     * Deletes all persons associated with a User
+     * @param user User object
+     * @throws DataAccessException
+     */
+    //TODO: TEST THIS
+    public void Delete(User user) throws DataAccessException {
+        String sql = "DELETE FROM Persons WHERE AssociatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, user.getUsername());
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DataAccessException("SQL Error encountered while deleting persons associated with user");
         }
     }
 

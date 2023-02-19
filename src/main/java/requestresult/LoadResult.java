@@ -1,9 +1,9 @@
 package requestresult;
 
-public class FillRequest {
+public class LoadResult {
     private boolean success;
 
-    public FillRequest(boolean success) {
+    public LoadResult(boolean success) {
         this.success = success;
     }
 

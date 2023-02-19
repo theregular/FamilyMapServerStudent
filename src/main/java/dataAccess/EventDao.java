@@ -1,8 +1,12 @@
 package dataAccess;
 
 import model.Event;
+import model.Person;
+import model.User;
 
 import java.sql.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class EventDao {
 
@@ -77,7 +81,35 @@ public class EventDao {
             e.printStackTrace();
             throw new DataAccessException("Error encountered while finding an event in the database");
         }
+    }
 
+    /**
+     * Returns a list of all events associated with a username
+     * @param username String
+     * @return List<Event>
+     * @throws DataAccessException
+     */
+    //TODO:IMPLEMENT THIS
+    public List<Event> getEventsForUser(String username) throws DataAccessException {
+        List<Event> events = new ArrayList<>();
+
+        return events;
+    }
+
+    /**
+     * Deletes all events associated with the person object
+     * @param person Person object
+     * @throws DataAccessException
+     */
+    //TODO: TEST THIS
+    public void Delete(Person person) throws DataAccessException {
+        String sql = "DELETE FROM Events WHERE PersonID = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, person.getPersonID());
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new DataAccessException("SQL Error encountered while deleting person");
+        }
     }
 
     /**
