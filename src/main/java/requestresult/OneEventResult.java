@@ -10,9 +10,26 @@ public class OneEventResult {
     private String city;
     private String eventType;
     private Integer year;
-    boolean success;
+    private boolean success;
 
-    public OneEventResult(String eventID, String associatedUsername, String personID, Float latitude, Float longitude, String country, String city, String eventType, Integer year, boolean success) {
+    private String message;
+
+    /**
+     * Constructor that takes parameters necessary to build the object
+     * @param eventID
+     * @param associatedUsername
+     * @param personID
+     * @param latitude
+     * @param longitude
+     * @param country
+     * @param city
+     * @param eventType
+     * @param year
+     * @param message
+     * @param success
+     */
+
+    public OneEventResult(String eventID, String associatedUsername, String personID, Float latitude, Float longitude, String country, String city, String eventType, Integer year, boolean success, String message) {
         this.eventID = eventID;
         this.associatedUsername = associatedUsername;
         this.personID = personID;
@@ -23,5 +40,6 @@ public class OneEventResult {
         this.eventType = eventType;
         this.year = year;
         this.success = success;
+        this.message = message;
     }
 }

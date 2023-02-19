@@ -5,11 +5,21 @@ public class LoginResult {
     private String username;
     private String personID;
     private boolean success;
+    private String message;
 
-    public LoginResult(String authtoken, String username, String personID, boolean success) {
+    /**
+     * Constructor that takes parameters necessary to build the object
+     * @param authtoken
+     * @param username
+     * @param personID
+     * @param message
+     * @param success
+     */
+    public LoginResult(String authtoken, String username, String personID, String message, boolean success) {
         this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
+        this.message = message;
         this.success = success;
     }
 

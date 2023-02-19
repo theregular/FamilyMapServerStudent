@@ -8,6 +8,16 @@ public class RegisterRequest {
     private String lastName;
     private String gender;
 
+    /**
+     * Constructor that takes parameters necessary to build the object
+     * @param username String
+     * @param password String
+     * @param email String
+     * @param firstName String
+     * @param lastName String
+     * @param gender String
+     */
+
     public RegisterRequest(String username, String password, String email, String firstName, String lastName, String gender) {
         this.username = username;
         this.password = password;

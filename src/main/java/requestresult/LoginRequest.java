@@ -4,6 +4,11 @@ public class LoginRequest {
     private String username;
     private String password;
 
+    /**
+     * Constructor that takes parameters necessary to build the object
+     * @param username String
+     * @param password String
+     */
     public LoginRequest(String username, String password) {
         this.username = username;
         this.password = password;

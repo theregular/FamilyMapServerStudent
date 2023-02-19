@@ -2,6 +2,7 @@ package requestresult;
 
 public class ClearResult {
     private boolean success;
+    private String message;
 
     public ClearResult(boolean success) {
         this.success = success;
