@@ -1,5 +1,7 @@
 package model;
 
+//MAYBE UNNECESSARY?
+
 import java.util.Objects;
 public class Authtoken {
     private String authtoken;
