@@ -8,7 +8,7 @@ public class AllPersonsService {
      * @param r AllPersonsRequest Object
      * @return AllPersonsResult Object
      */
-    AllPersonsResult register(AllPersonsRequest r) {
+    AllPersonsResult getAllPersons(AllPersonsRequest r) {
 
         return null;
     }

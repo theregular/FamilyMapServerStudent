@@ -7,6 +7,12 @@ public class Authtoken {
     private String authtoken;
     private String username;
 
+    /**
+     * Constructor to build object
+     * @param authtoken
+     * @param username
+     */
+
     public Authtoken (String authtoken, String username) {
         this.authtoken = authtoken;
         this.username = username;

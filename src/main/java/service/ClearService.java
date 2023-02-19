@@ -9,7 +9,7 @@ public class ClearService {
      * @param r ClearRequest Object
      * @return ClearResult Object
      */
-    ClearResult register(ClearRequest r) {
+    ClearResult clear(ClearRequest r) {
         return null;
     }
 }

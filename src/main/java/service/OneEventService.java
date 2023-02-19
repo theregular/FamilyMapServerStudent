@@ -8,7 +8,7 @@ public class OneEventService {
      * @param r OneEventRequest Object
      * @return OneEventResult Object
      */
-    OneEventResult register(OneEventRequest r) {
+    OneEventResult getOneEvent(OneEventRequest r) {
 
         return null;
     }

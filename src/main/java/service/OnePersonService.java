@@ -8,7 +8,7 @@ public class OnePersonService {
      * @param r OnePersonRequest Object
      * @return OnePersonResult Object
      */
-    OnePersonResult register(OnePersonRequest r) {
+    OnePersonResult getOnePerson(OnePersonRequest r) {
         return null;
     }
 }

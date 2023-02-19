@@ -9,7 +9,7 @@ public class LoadService {
      * @param r LoadRequest Object
      * @return LoadResult Object
      */
-    LoadResult register(LoadRequest r) {
+    LoadResult load(LoadRequest r) {
 
         return null;
     }

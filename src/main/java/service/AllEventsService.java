@@ -8,7 +8,7 @@ public class AllEventsService {
      * @param r AllEventsRequest Object
      * @return AllEventsResult Object
      */
-    AllEventsResult register(AllEventsRequest r) {
+    AllEventsResult getAllEvents(AllEventsRequest r) {
 
         return null;
     }

@@ -8,6 +8,10 @@ import java.sql.Statement;
 public class Database {
     private Connection conn;
 
+    /**
+     * Opens connection to allow Database to be updated
+     */
+
     // Whenever we want to make a change to our database we will have to open a connection and use
     // Statements created by that connection to initiate transactions
     public Connection openConnection() throws DataAccessException {
@@ -36,6 +40,10 @@ public class Database {
             return conn;
         }
     }
+
+    /**
+     * Closes connection to Database
+     */
 
     // When we are done manipulating the database it is important to close the connection. This will
     // end the transaction and allow us to either commit our changes to the database (if true is passed in)
@@ -66,7 +74,6 @@ public class Database {
      * Clears all database tables
      * @throws DataAccessException
      */
-
     public void clearTables() throws DataAccessException
     {
 
