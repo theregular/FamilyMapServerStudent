@@ -143,14 +143,16 @@
     <h2>Built to power BYU CS 240 Family Map Application for Android</h2>
   </div>
   <div>
-    <h4>The web API that will be used is described below. Some of the APIs require a request body
-      to be sent (namely "/user/login" and "/user/register"), while others require an Authorization authtoken (received
-      at login).
-      To view the JSON format required for "/user/login" and "/user/register" simply click on the link below and look in
-      the request body.
-      To try out an API, click on its link below. It will fill the boxes below with the data to be sent with the
-      request.
-      Edit the data as needed and click Submit.</h4>
+    <h4>The web API that will be used is described below. Some of the APIs require a requestresult body
+        to be sent (namely "/user/login" and "/user/register"), while others require an Authorization authtoken
+        (received
+        at login).
+        To view the JSON format required for "/user/login" and "/user/register" simply click on the link below and look
+        in
+        the requestresult body.
+        To try out an API, click on its link below. It will fill the boxes below with the data to be sent with the
+        requestresult.
+        Edit the data as needed and click Submit.</h4>
 
     <!-- Commands for the Database -->
     <div style="border: 2px solid black;">
@@ -167,7 +169,7 @@
           data provided by json text in the response body. The json text must contain an array of users as
           defined in the register details in addition to a personID, an array of persons, and an array of events.
           WARNING: all data from the database is wiped when this is called. The json file will be specified in
-          the body of the request. A example.json file is provided to get you started with loading specific data.
+          the body of the requestresult. A example.json file is provided to get you started with loading specific data.
           No authorization authtoken is required.
         </li>
         <li>
@@ -198,7 +200,7 @@
       <h1 style="padding-left:1cm; text-decoration: underline;">User Commands</h1>
       <ul>
         <li>
-          <a href="javascript:login()">/user/login</a> Use this to log in a user. A request body
+          <a href="javascript:login()">/user/login</a> Use this to log in a user. A requestresult body
           must be supplied specifying the username and password. If login succeeds, an authorization
           authtoken will be returned. Use this authtoken on other API calls that require authorization.
           The returned JSON object contains "Authorization" (the authorization authtoken) and "username"
