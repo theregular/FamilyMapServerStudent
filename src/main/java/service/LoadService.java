@@ -2,7 +2,9 @@ package service;
 
 import requestresult.LoadRequest;
 import requestresult.LoadResult;
-
+/**
+ * Processes Load requests and results
+ */
 public class LoadService {
 
     /** Load Service

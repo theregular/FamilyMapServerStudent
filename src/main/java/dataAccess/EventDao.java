@@ -8,6 +8,9 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Event DAO Object used to alter information related to events in the database
+ */
 public class EventDao {
 
     /**
@@ -86,7 +89,7 @@ public class EventDao {
     /**
      * Returns a list of all events associated with a username
      * @param username String
-     * @return List<Event>
+     * @return List of Event objects
      * @throws DataAccessException
      */
     //TODO:IMPLEMENT THIS

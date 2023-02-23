@@ -2,7 +2,9 @@ package service;
 
 import requestresult.AllPersonsRequest;
 import requestresult.AllPersonsResult;
-
+/**
+ * Processes AllPersons requests and results
+ */
 public class AllPersonsService {
     /** All Persons Service
      * @param r AllPersonsRequest Object

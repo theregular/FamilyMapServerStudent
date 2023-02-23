@@ -3,6 +3,10 @@ package model;
 //MAYBE UNNECESSARY?
 
 import java.util.Objects;
+
+/**
+ * Authtoken model object used to store info passed from database
+ */
 public class Authtoken {
     private String authtoken;
     private String username;
@@ -34,11 +38,21 @@ public class Authtoken {
         this.username = username;
     }
 
+    /**
+     * Returns a hashcode for the authtoken object
+     * @return int hashcode
+     */
+
     @Override
     public int hashCode() {
         return Objects.hash(authtoken, username);
     }
 
+
+    /**
+     * Returns a string representation of the authtoken object
+     * @return String
+     */
     @Override
     public String toString() {
         return "Authtoken{" +
@@ -46,6 +60,11 @@ public class Authtoken {
                 ", username='" + username + '\'' +
                 '}';
     }
+
+    /**
+     * Returns a boolean for comparision of authtoken objects
+     * @return boolean
+     */
 
     @Override
     public boolean equals(Object o) {

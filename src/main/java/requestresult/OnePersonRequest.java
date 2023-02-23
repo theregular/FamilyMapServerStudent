@@ -1,5 +1,8 @@
 package requestresult;
 
-public class OnePersonRequest {
+import model.Authtoken;
 
+public class OnePersonRequest {
+    private String personID;
+    private Authtoken authtoken;
 }

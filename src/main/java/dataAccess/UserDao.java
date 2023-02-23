@@ -5,7 +5,9 @@ import model.Event;
 import model.Person;
 
 import java.sql.*;
-
+/**
+ * User DAO Object used to alter information related to users in the database
+ */
 public class UserDao {
     /**
      * The connection to the database

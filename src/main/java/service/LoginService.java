@@ -2,7 +2,9 @@ package service;
 
 import requestresult.LoginResult;
 import requestresult.LoginRequest;
-
+/**
+ * Processes Login requests and results
+ */
 public class LoginService {
 
     /** Login Service

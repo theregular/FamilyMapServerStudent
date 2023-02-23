@@ -2,6 +2,9 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * Event model object used to store info passed from database
+ */
 public class Event {
     private String eventID;
     private String associatedUsername;
@@ -110,6 +113,11 @@ public class Event {
         this.year = year;
     }
 
+    /**
+     * Returns a string representation of the Event object
+     * @return String
+     */
+
     @Override
     public String toString() {
         return "Event{" +
@@ -125,11 +133,20 @@ public class Event {
                 '}';
     }
 
+    /**
+     * Returns a hashcode for the Event object
+     * @return int hashcode
+     */
+
     @Override
     public int hashCode() {
         return Objects.hash(eventID, associatedUsername, personID, latitude, longitude, country, city, eventType, year);
     }
 
+    /**
+     * Returns a boolean for comparision of Event objects
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

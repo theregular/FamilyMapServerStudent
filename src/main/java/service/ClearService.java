@@ -2,7 +2,9 @@ package service;
 
 import requestresult.ClearRequest;
 import requestresult.ClearResult;
-
+/**
+ * Processes Clear requests and results
+ */
 public class ClearService {
 
     /** Clear Service

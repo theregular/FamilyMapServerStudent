@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+/**
+ * Database objects manages opening and closing connections to the database
+ */
 public class Database {
     private Connection conn;
 
     /**
      * Opens connection to allow Database to be updated
+     * @return conn connection Object
      */
 
     // Whenever we want to make a change to our database we will have to open a connection and use
@@ -33,6 +36,11 @@ public class Database {
         return conn;
     }
 
+    /**
+     * Gets connection to Database, if connection not found, opens the connection
+     * @return conn connection Object
+     */
+
     public Connection getConnection() throws DataAccessException {
         if (conn == null) {
             return openConnection();
@@ -42,7 +50,7 @@ public class Database {
     }
 
     /**
-     * Closes connection to Database
+     * Closes connection to Database to avoid database locking
      */
 
     // When we are done manipulating the database it is important to close the connection. This will

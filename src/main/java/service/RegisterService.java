@@ -2,7 +2,9 @@ package service;
 
 import requestresult.RegisterRequest;
 import requestresult.RegisterResult;
-
+/**
+ * Processes Register requests and results
+ */
 public class RegisterService {
 
     /** Register Service

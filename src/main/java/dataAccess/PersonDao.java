@@ -8,6 +8,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Person DAO Object used to alter information related to persons in the database
+ */
 public class PersonDao {
     /**
      * The connection to the database
@@ -75,7 +78,7 @@ public class PersonDao {
     /**
      * Returns a list of all persons associated with a username
      * @param username String
-     * @return List<Person>
+     * @return List of Person Objects
      * @throws DataAccessException
      */
     //TODO:IMPLEMENT THIS

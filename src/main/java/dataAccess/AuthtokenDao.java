@@ -5,6 +5,10 @@ import model.Person;
 
 import java.sql.*;
 
+/**
+ * Authtoken DAO Object used to alter information related to authtokens in the database
+ */
+
 public class AuthtokenDao {
     /**
      * The connection to the database

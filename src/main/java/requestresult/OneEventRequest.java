@@ -1,5 +1,8 @@
 package requestresult;
 
-public class OneEventRequest {
+import model.Authtoken;
 
+public class OneEventRequest {
+    private String eventID;
+    private Authtoken authtoken;
 }

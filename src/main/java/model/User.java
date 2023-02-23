@@ -1,6 +1,9 @@
 package model;
 
 import java.util.Objects;
+/**
+ * User model object used to store info passed from database
+ */
 public class User {
     private String username;
     private String password;
@@ -77,6 +80,11 @@ public class User {
         this.personID = personID;
     }
 
+    /**
+     * Returns a string representation of the User object
+     * @return String
+     */
+
     @Override
     public String toString() {
         return "User{" +
@@ -90,11 +98,20 @@ public class User {
                 '}';
     }
 
+    /**
+     * Returns a hashcode for the User object
+     * @return int hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(username, password, email, firstName, lastName, gender, personID);
     }
 
+
+    /**
+     * Returns a boolean for comparision of User objects
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
