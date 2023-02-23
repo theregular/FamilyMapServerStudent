@@ -1,5 +1,7 @@
 package requestresult;
-
+/**
+ * Object used in the Fill process to transfer result information
+ */
 public class FillResult {
     private boolean success;
     private String message;

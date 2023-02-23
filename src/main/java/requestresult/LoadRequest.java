@@ -3,7 +3,9 @@ package requestresult;
 import model.User;
 import model.Event;
 import model.Person;
-
+/**
+ * Object used in the Load process to transfer request information
+ */
 public class LoadRequest {
     private User[] users;
     private Event[] events;

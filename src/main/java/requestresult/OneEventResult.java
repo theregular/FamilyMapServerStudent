@@ -1,5 +1,7 @@
 package requestresult;
-
+/**
+ * Object used in the OneEvent process to transfer result information
+ */
 public class OneEventResult {
     private String eventID;
     private String associatedUsername;

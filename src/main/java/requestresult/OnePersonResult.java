@@ -1,5 +1,7 @@
 package requestresult;
-
+/**
+ * Object used in the OnePerson process to transfer result information
+ */
 public class OnePersonResult {
     private String associatedUsername;
     private String personID;

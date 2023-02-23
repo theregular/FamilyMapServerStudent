@@ -1,5 +1,7 @@
 package requestresult;
-
+/**
+ * Object used in the Load process to transfer result information
+ */
 public class LoadResult {
     private boolean success;
     private String message;

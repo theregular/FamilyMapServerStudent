@@ -1,5 +1,7 @@
 package requestresult;
-
+/**
+ * Object used in the Register process to transfer request information
+ */
 public class RegisterRequest {
     private String username;
     private String password;

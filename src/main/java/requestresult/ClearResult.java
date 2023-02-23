@@ -1,5 +1,7 @@
 package requestresult;
-
+/**
+ * Object used in the Clear process to transfer result information
+ */
 public class ClearResult {
     private boolean success;
     private String message;

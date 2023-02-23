@@ -1,5 +1,7 @@
 package requestresult;
-
+/**
+ * Object used in the Login process to transfer result information
+ */
 public class LoginResult {
     private String authtoken;
     private String username;
