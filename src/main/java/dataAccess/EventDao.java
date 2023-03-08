@@ -78,6 +78,7 @@ public class EventDao {
                         rs.getInt("Year"));
                 return event;
             } else {
+                //System.out.println("PERSON NOT FOUND IN RESULT SET");
                 return null;
             }
         } catch (SQLException e) {

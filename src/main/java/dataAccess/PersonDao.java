@@ -5,8 +5,8 @@ import model.Event;
 import model.User;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Person DAO Object used to alter information related to persons in the database
@@ -42,6 +42,8 @@ public class PersonDao {
             stmt.setString(6, person.getFatherID());
             stmt.setString(7, person.getMotherID());
             stmt.setString(8, person.getSpouseID());
+
+            stmt.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -67,6 +69,7 @@ public class PersonDao {
                         rs.getString("Gender"), rs.getString("FatherID"), rs.getString("MotherID"), rs.getString("SpouseID"));
                 return person;
             } else {
+                //System.out.println("PERSON NOT FOUND IN RESULT SET");
                 return null;
             }
         } catch (SQLException e) {
