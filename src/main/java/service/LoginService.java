@@ -5,6 +5,9 @@ import requestresult.LoginRequest;
 /**
  * Processes Login requests and results
  */
+
+
+///Service classes manage database connections
 public class LoginService {
 
     /** Login Service
