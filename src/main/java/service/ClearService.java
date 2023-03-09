@@ -1,17 +1,33 @@
 package service;
 
-import requestresult.ClearRequest;
+import dataAccess.DataAccessException;
+import dataAccess.Database;
 import requestresult.ClearResult;
+
 /**
  * Processes Clear requests and results
  */
 public class ClearService {
 
     /** Clear Service
-     * @param r ClearRequest Object
      * @return ClearResult Object
      */
-    ClearResult clear(ClearRequest r) {
-        return null;
+    public ClearResult clear() {
+        ClearResult result = new ClearResult(false);
+        Database db = new Database();
+        try {
+            db.getConnection();
+            db.clearTables();
+            db.closeConnection(true);
+            result.setSuccess(true);
+            result.setMessage("Clear succeeded.");
+        }
+        catch (DataAccessException e) {
+            db.closeConnection(false);
+            e.printStackTrace();
+            result.setMessage("Error: " + e.getMessage());
+        }
+
+        return result;
     }
 }

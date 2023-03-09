@@ -1,5 +1,6 @@
 package service;
 
+import dataAccess.Database;
 import requestresult.LoginResult;
 import requestresult.LoginRequest;
 /**
@@ -14,7 +15,9 @@ public class LoginService {
      * @param r LoginRequest Object
      * @return LoginResult Object
      */
-    LoginResult register(LoginRequest r) {
+    LoginResult login(LoginRequest r) {
+        Database db = new Database();
+
         return null;
     }
 

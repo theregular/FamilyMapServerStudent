@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  font-size:
+    font-size: 1em;
 }
 
 h2{
@@ -23,11 +23,11 @@ h2{
 }
 
 a {
-  color: blue;
+    color: blue;
 }
 
 div {
-  margin: 5px;
+    margin: 5px;
 }
 
 .requestBody
@@ -46,11 +46,11 @@ div {
 
 .bottom
 {
-  margin:0;
+    margin:0;
 }
 
 ul {
-  padding-right: 15px;
+    padding-right: 15px;
 }
 
 /*
@@ -228,7 +228,7 @@ textarea {
 }
 
 @media print,
-       (min-resolution: 120dpi) {
+(min-resolution: 120dpi) {
     /* Style adjustments for high resolution devices */
 }
 

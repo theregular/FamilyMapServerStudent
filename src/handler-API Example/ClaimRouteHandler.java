@@ -125,7 +125,7 @@ class ClaimRouteHandler implements HttpHandler {
 			exchange.getResponseBody().close();
 			
 			// Display/log the stack trace
-			e.printStackTrace();
+
 		}
 	}
 	
