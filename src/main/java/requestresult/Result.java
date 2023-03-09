@@ -1,8 +1,8 @@
 package requestresult;
 
 public class Result {
-    protected boolean success;
     protected String message;
+    protected boolean success;
 
     public String getMessage() {
         return message;

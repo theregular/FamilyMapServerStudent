@@ -5,6 +5,7 @@ import java.net.*;
 import com.sun.net.httpserver.*;
 import com.google.gson.Gson;
 
+import requestresult.ClearResult;
 import service.ClearService;
 import requestresult.Result;
 
@@ -12,23 +13,26 @@ public class ClearHandler extends Handler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         boolean success = false;
+        ClearService service = new ClearService();
+        Result result;
 
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
 
                 //request null so not necessary?
-                Headers reqHeaders = exchange.getRequestHeaders();
+                //Headers reqHeaders = exchange.getRequestHeaders();
 
-                ClearService service = new ClearService();
-                Result result = service.clear();
+                result = service.clear();
 
-                Gson gson = new Gson();
-                String responseStr = gson.toJson(result);
+                //Gson gson = new Gson();
+                String resData = gson.toJson(result);
 
-                OutputStream respBody = exchange.getResponseBody();
-                writeString(responseStr, respBody);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
-                exchange.getResponseBody().close();
+                OutputStream resBody = exchange.getResponseBody();
+                writeString(resData, resBody);
+
+                resBody.close();
                 success = true;
             }
 

@@ -101,6 +101,26 @@ public class UserDao {
         return password.equals(foundPassword);
     }
 
+    public String userPersonID(String username) throws DataAccessException {
+        String personID;
+        ResultSet rs;
+        String sql = "SELECT * FROM Users WHERE username = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                personID = rs.getString("PersonID");
+            } else {
+                return null;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while validating username and password in the database");
+        }
+        return personID;
+    }
+
     /**
      * Clears the database of all Users
      * @throws DataAccessException

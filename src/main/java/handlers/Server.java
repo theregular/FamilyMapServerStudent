@@ -28,8 +28,8 @@ public class Server {
         System.out.println("Creating contexts");
 
         //Creating & installing handlers
-        //server.createContext("/user/register", new RegisterHandler());
-        //server.createContext("/user/login", new LoginHandler());
+        server.createContext("/user/register", new RegisterHandler());
+        server.createContext("/user/login", new LoginHandler());
         server.createContext("/clear", new ClearHandler());
         //server.createContext("/fill/", new FillHandler());
         //server.createContext("/load", new LoadHandler());
@@ -38,7 +38,7 @@ public class Server {
 
         //maybe unnecessary?
         //server.createContext("/person/", new PersonHandler());
-        //server.createContext("/event/", new EventHandler());
+        //server.createContext("/event/", new OneEventHandler());
 
         //default
         server.createContext("/", new FileHandler());

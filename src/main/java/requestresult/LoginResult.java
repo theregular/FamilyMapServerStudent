@@ -2,27 +2,33 @@ package requestresult;
 /**
  * Object used in the Login process to transfer result information
  */
-public class LoginResult {
+public class LoginResult extends Result {
     private String authtoken;
     private String username;
     private String personID;
-    private boolean success;
-    private String message;
 
     /**
-     * Constructor that takes parameters necessary to build the object
+     * Constructor
+     * @param success
+     */
+    public LoginResult(boolean success) {
+        this.authtoken = null;
+        this.username = null;
+        this.personID = null;
+        this.message = null;
+        this.success = success;
+    }
+
+    /**
+     * Fills with Login info (doesn't set message or success, use inherited methods for that)
      * @param authtoken
      * @param username
      * @param personID
-     * @param message
-     * @param success
      */
-    public LoginResult(String authtoken, String username, String personID, String message, boolean success) {
+    public void setInfo(String authtoken, String username, String personID) {
         this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
-        this.message = message;
-        this.success = success;
     }
 
     public String getAuthtoken() {

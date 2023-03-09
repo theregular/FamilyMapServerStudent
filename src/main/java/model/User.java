@@ -109,7 +109,7 @@ public class User {
 
 
     /**
-     * Returns a boolean for comparision of User objects
+     * Returns a boolean for comparison of User objects
      * @return boolean
      */
     @Override

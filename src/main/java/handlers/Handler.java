@@ -1,9 +1,15 @@
 package handlers;
 
 import java.io.*;
+
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpHandler;
 
 public abstract class Handler implements HttpHandler {
+
+    protected boolean success = false;
+
+    Gson gson = new Gson();
 
     protected void writeString(String str, OutputStream os) throws IOException {
         OutputStreamWriter sw = new OutputStreamWriter(os);

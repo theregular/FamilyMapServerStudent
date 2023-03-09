@@ -3,6 +3,7 @@ package service;
 import dataAccess.DataAccessException;
 import dataAccess.Database;
 import requestresult.ClearResult;
+import requestresult.Result;
 
 /**
  * Processes Clear requests and results
@@ -12,7 +13,7 @@ public class ClearService {
     /** Clear Service
      * @return ClearResult Object
      */
-    public ClearResult clear() {
+    public Result clear() {
         ClearResult result = new ClearResult(false);
         Database db = new Database();
         try {
@@ -27,7 +28,6 @@ public class ClearService {
             e.printStackTrace();
             result.setMessage("Error: " + e.getMessage());
         }
-
         return result;
     }
 }

@@ -2,27 +2,32 @@ package requestresult;
 /**
  * Object used in the Register process to transfer result information
  */
-public class RegisterResult {
+public class RegisterResult extends Result{
     private String authtoken;
     private String username;
     private String personID;
-    private boolean success;
-    private String message;
 
 
     /**
-     * Constructor that builds the object with the correct information
+     * Constructor
+     * @param success
+     */
+    public RegisterResult(boolean success) {
+        this.authtoken = null;
+        this.username = null;
+        this.personID = null;
+        this.success = success;
+        this.message = null;
+    }
+    /**
+     * Fills with Register info (doesn't set message or success, use inherited methods for that)
      * @param authtoken
      * @param username
      * @param personID
-     * @param success
-     * @param message
      */
-    public RegisterResult(String authtoken, String username, String personID, boolean success, String message) {
+    public void setInfo(String authtoken, String username, String personID) {
         this.authtoken = authtoken;
         this.username = username;
         this.personID = personID;
-        this.success = success;
-        this.message = message;
     }
 }

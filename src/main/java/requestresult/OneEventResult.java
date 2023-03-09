@@ -1,8 +1,8 @@
 package requestresult;
 /**
- * Object used in the OneEvent process to transfer result information
+ * Object used in the OneEvent  process to transfer result information
  */
-public class OneEventResult {
+public class OneEventResult extends Result {
     private String eventID;
     private String associatedUsername;
     private String personID;
@@ -12,12 +12,27 @@ public class OneEventResult {
     private String city;
     private String eventType;
     private Integer year;
-    private boolean success;
+    /**
+     * Constructor
+     * @param success
+     */
 
-    private String message;
+    public OneEventResult(boolean success) {
+        this.eventID = null;
+        this.associatedUsername = null;
+        this.personID = null;
+        this.latitude = null;
+        this.longitude = null;
+        this.country = null;
+        this.city = null;
+        this.eventType = null;
+        this.year = null;
+        this.success = success;
+        this.message = null;
+    }
 
     /**
-     * Constructor that takes parameters necessary to build the object
+     * Fills with Event info (doesn't set message or success, use inherited methods for that)
      * @param eventID
      * @param associatedUsername
      * @param personID
@@ -27,11 +42,9 @@ public class OneEventResult {
      * @param city
      * @param eventType
      * @param year
-     * @param message
-     * @param success
      */
 
-    public OneEventResult(String eventID, String associatedUsername, String personID, Float latitude, Float longitude, String country, String city, String eventType, Integer year, boolean success, String message) {
+    public void setInfo(String eventID, String associatedUsername, String personID, Float latitude, Float longitude, String country, String city, String eventType, Integer year) {
         this.eventID = eventID;
         this.associatedUsername = associatedUsername;
         this.personID = personID;
@@ -41,7 +54,6 @@ public class OneEventResult {
         this.city = city;
         this.eventType = eventType;
         this.year = year;
-        this.success = success;
-        this.message = message;
     }
+
 }
