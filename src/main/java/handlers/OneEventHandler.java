@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 public class OneEventHandler extends Handler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        boolean success = false;
-
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("get")) {
 

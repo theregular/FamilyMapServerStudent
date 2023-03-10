@@ -12,15 +12,11 @@ import requestresult.Result;
 public class ClearHandler extends Handler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        boolean success = false;
         ClearService service = new ClearService();
-        Result result;
+        ClearResult result;
 
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
-
-                //request null so not necessary?
-                //Headers reqHeaders = exchange.getRequestHeaders();
 
                 result = service.clear();
 

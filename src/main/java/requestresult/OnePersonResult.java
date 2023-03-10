@@ -2,7 +2,7 @@ package requestresult;
 /**
  * Object used in the OnePerson process to transfer result information
  */
-public class OnePersonResult {
+public class OnePersonResult extends Result{
     private String associatedUsername;
     private String personID;
     private String firstName;
@@ -16,28 +16,46 @@ public class OnePersonResult {
 
 
     /**
-     * Constructor that takes parameters necessary to build the object
+     * Constructor
+     * @param success
+     */
+    public OnePersonResult(boolean success) {
+        this.associatedUsername = null;
+        this.personID = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.gender = null;
+        this.fatherID = null;
+        this.motherID = null;
+        this.spouseID = null;
+        this.success = success;
+        this.message = null;
+    }
+
+    /**
+     * Fills with Person info except for fatherID, motherID, and spouseID (doesn't set message or success, use inherited methods for that)
      * @param associatedUsername
      * @param personID
      * @param firstName
      * @param lastName
      * @param gender
-     * @param fatherID
-     * @param motherID
-     * @param spouseID
-     * @param success
-     * @param message
      */
-    public OnePersonResult(String associatedUsername, String personID, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID, boolean success, String message) {
-        this.associatedUsername = associatedUsername;
+    public void setInfo(String associatedUsername, String personID, String firstName, String lastName, String gender) {
         this.personID = personID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
+    }
+
+    public void setFatherID(String fatherID) {
         this.fatherID = fatherID;
+    }
+
+    public void setMotherID(String motherID) {
         this.motherID = motherID;
+    }
+
+    public void setSpouseID(String spouseID) {
         this.spouseID = spouseID;
-        this.success = success;
-        this.message = message;
     }
 }

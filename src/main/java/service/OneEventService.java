@@ -20,6 +20,7 @@ public class OneEventService {
         OneEventResult result = new OneEventResult(false);
         Database db = new Database();
         try {
+            //connect DAO to database
             Connection conn = db.getConnection();
             EventDao eDao = new EventDao(conn);
 

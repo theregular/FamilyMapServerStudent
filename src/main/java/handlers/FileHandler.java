@@ -13,7 +13,7 @@ public class FileHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("get")) {
-                String urlPath = exchange.getRequestURI().toString();
+                    String urlPath = exchange.getRequestURI().toString();
                 File file;
                 if (urlPath.equals(null) || urlPath.equals("/")) {
                     urlPath = "web/index.html";

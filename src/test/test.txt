@@ -1,0 +1,19 @@
+/user/register
+{
+	"username":"timmywinner",
+	"password":"password",
+	"email":"timwin@gmail.com",
+	"firstName":"Timmy",
+	"lastName":"Longnuts",
+	"gender":"M"
+}
+
+/fill/timmywinner/3
+
+/fill/timmywinner/
+
+/user/login
+{
+	"username":"timmywinner",
+	"password":"password"
+}

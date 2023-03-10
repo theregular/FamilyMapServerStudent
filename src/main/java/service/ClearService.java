@@ -13,12 +13,14 @@ public class ClearService {
     /** Clear Service
      * @return ClearResult Object
      */
-    public Result clear() {
+    public ClearResult clear() {
         ClearResult result = new ClearResult(false);
         Database db = new Database();
         try {
             db.getConnection();
+
             db.clearTables();
+
             db.closeConnection(true);
             result.setSuccess(true);
             result.setMessage("Clear succeeded.");

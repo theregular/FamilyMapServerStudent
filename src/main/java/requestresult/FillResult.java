@@ -2,25 +2,12 @@ package requestresult;
 /**
  * Object used in the Fill process to transfer result information
  */
-public class FillResult {
-    private boolean success;
-    private String message;
+public class FillResult extends Result {
 
     /**
-     * Constructor that takes parameters necessary to build the object
-     * @param success
-     * @param message
+     * Constructor
      */
-    public FillResult(boolean success, String message) {
+    public FillResult(boolean success) {
         this.success = success;
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
