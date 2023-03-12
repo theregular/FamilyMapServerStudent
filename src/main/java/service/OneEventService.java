@@ -43,6 +43,9 @@ public class OneEventService  {
                 db.closeConnection(true);
                 result.setSuccess(true);
             }
+            else {
+                throw new DataAccessException("Couldn't find Event with provided eventID");
+            }
         }
         catch (DataAccessException e) {
             db.closeConnection(false);

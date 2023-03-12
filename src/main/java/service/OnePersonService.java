@@ -57,7 +57,7 @@ public class OnePersonService {
                 result.setSuccess(true);
             }
             else {
-                throw new DataAccessException("Invalid personID!");
+                throw new DataAccessException("Couldn't find Person with provided personID");
             }
         }
         catch (DataAccessException e) {

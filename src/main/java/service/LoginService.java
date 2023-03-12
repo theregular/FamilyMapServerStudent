@@ -36,6 +36,10 @@ public class LoginService {
             UserDao uDao = new UserDao(conn);
             AuthtokenDao aDao = new AuthtokenDao(conn);
 
+            if (r.getUsername() == null || r.getPassword() == null) { //check for request fields to be filled
+                throw new DataAccessException("Please provide a valid username and/or password");
+            }
+
             User user = uDao.find(r.getUsername());
             if (user != null) { //user registered?
                 if (uDao.validate(r.getUsername(), r.getPassword())) { //correct username/password?

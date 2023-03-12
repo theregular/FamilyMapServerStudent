@@ -118,7 +118,7 @@ public class FillService {
     /**
      * Generates family history data
      */
-    public void generate(String username, int generations) throws DataAccessException{
+    private void generate(String username, int generations) throws DataAccessException{
 
         //check if generations is valid
         if (generations >= 0 && generations <= 10) {
@@ -249,7 +249,7 @@ public class FillService {
     }
 
 
-    public HashMap<String, Object> generatePerson(String username, int generations, String gender, String prevlastName, int childBirthYear) throws DataAccessException {
+    private HashMap<String, Object> generatePerson(String username, int generations, String gender, String prevlastName, int childBirthYear) throws DataAccessException {
         //ArrayList<Object> returnStuff = new ArrayList<>(); //weird idea
         HashMap<String, Object> returnStuff = new HashMap<>(); //weird idea 2
         String newPersonID = UUID.randomUUID().toString();
@@ -383,12 +383,15 @@ public class FillService {
         return returnStuff;
     }
 
-    public Event generateEvent(Person person, String eventType) {
+    /*
+    private Event generateEvent(Person person, String eventType) {
         eventType = eventType.toLowerCase();
         return null;
     }
 
-    public Event generateBirthEvent(Person person, int year) throws DataAccessException {
+     */
+
+    private Event generateBirthEvent(Person person, int year) throws DataAccessException {
         String newEventID = UUID.randomUUID().toString(); //generate eventID
         Location birthLocation = locations[randomNumber(locations.length - 1)]; //get random location
 
@@ -401,7 +404,7 @@ public class FillService {
         return birthEvent;
     }
 
-    public Event generateMarriageEvent(Person person, Location location, int year) throws DataAccessException {
+    private Event generateMarriageEvent(Person person, Location location, int year) throws DataAccessException {
         String newEventID = UUID.randomUUID().toString(); //generate eventID
         Event marriageEvent = new Event(newEventID, person.getAssociatedUsername(), person.getPersonID(), location.getLatitude(),
                 location.getLongitude(), location.getCountry(), location.getCity(), "marriage", year);
@@ -411,7 +414,7 @@ public class FillService {
         return marriageEvent;
     }
 
-    public Event generateDeathEvent(Person person, int year) throws DataAccessException {
+    private Event generateDeathEvent(Person person, int year) throws DataAccessException {
         String newEventID = UUID.randomUUID().toString(); //generate eventID
         Location deathLocation = locations[randomNumber(locations.length - 1)]; //get random location
 
@@ -423,12 +426,12 @@ public class FillService {
         return deathEvent;
     }
 
-    public int randomNumber(int range){
+    private int randomNumber(int range){
         Random rand = new Random();
         return rand.nextInt(range);
     }
 
-    public int generateBirthYear(int childBirthYear) {
+    private int generateBirthYear(int childBirthYear) {
         int year = randomNumber(50);
         while (year < 13) {
             year += randomNumber(7);
@@ -436,7 +439,7 @@ public class FillService {
         return childBirthYear - year;
     }
 
-    public int generateMarriageYear(int husbandBirthYear, int wifeBirthYear) {
+    private int generateMarriageYear(int husbandBirthYear, int wifeBirthYear) {
 
         int year = randomNumber(50);
         while (year < 13) {
@@ -450,7 +453,7 @@ public class FillService {
         }
     }
 
-    public int generateDeathYear(int birthYear, int oldestEventYear) {
+    private int generateDeathYear(int birthYear, int oldestEventYear) {
         if ((oldestEventYear - birthYear) > 120) {
             return 0;
         }

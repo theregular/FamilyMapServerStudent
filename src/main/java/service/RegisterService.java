@@ -29,6 +29,11 @@ public class RegisterService {
             UserDao uDao = new UserDao(conn);
             AuthtokenDao aDao = new AuthtokenDao(conn);
             //PersonDao pDao = new PersonDao(conn);
+            if(r.getUsername() == null || r.getPassword() == null  ||
+                    r.getEmail() == null || r.getFirstName() == null ||
+                    r.getLastName() == null || r.getGender() == null) {
+                throw new DataAccessException("Please fill all request fields");
+            }
 
             if (uDao.find(r.getUsername()) == null) {
                 String gender = r.getGender().toLowerCase();
