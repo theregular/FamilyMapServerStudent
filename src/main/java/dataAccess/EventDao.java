@@ -58,6 +58,30 @@ public class EventDao {
         }
     }
 
+    public Event find(String username, String eventID) throws DataAccessException {
+        Event event;
+        ResultSet rs;
+        String sql = "SELECT * FROM Events WHERE EventID = ? AND associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, eventID);
+            stmt.setString(2, username);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                event = new Event(rs.getString("EventID"), rs.getString("AssociatedUsername"),
+                        rs.getString("PersonID"), rs.getFloat("Latitude"), rs.getFloat("Longitude"),
+                        rs.getString("Country"), rs.getString("City"), rs.getString("EventType"),
+                        rs.getInt("Year"));
+                return event;
+            } else {
+                //System.out.println("Event NOT FOUND IN RESULT SET");
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding an event in the database");
+        }
+    }
+
     /**
      * Returns an event object that corresponds to the event in the database that has this event ID
      * @param eventID String
@@ -78,7 +102,7 @@ public class EventDao {
                         rs.getInt("Year"));
                 return event;
             } else {
-                //System.out.println("PERSON NOT FOUND IN RESULT SET");
+                //System.out.println("Event NOT FOUND IN RESULT SET");
                 return null;
             }
         } catch (SQLException e) {
@@ -93,11 +117,74 @@ public class EventDao {
      * @return List of Event objects
      * @throws DataAccessException
      */
-    //TODO:IMPLEMENT THIS
-    public List<Event> getEventsForUser(String username) throws DataAccessException {
-        List<Event> events = new ArrayList<>();
+    public Event[] getEventsForUser(String username) throws DataAccessException {
+        ArrayList<Event> eventsArrayList = new ArrayList<>();
+        ResultSet rs;
+        String sql = "SELECT * FROM Events WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Event event = new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
+                        rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
+                        rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
+                        rs.getInt("year"));
+                eventsArrayList.add(event);
+            }
+            Event[] events = new Event[eventsArrayList.size()];
+            events = eventsArrayList.toArray(events);
+            return events;
 
-        return events;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding event");
+        }
+    }
+
+    /**
+     * Returns a list of all events associated with a personID
+     * @param personID String
+     * @return List of Event objects
+     * @throws DataAccessException
+     */
+    public ArrayList<Event> getEventsForPerson(String personID) throws DataAccessException {
+        ArrayList<Event> events = new ArrayList<>();
+        ResultSet rs;
+        String sql = "SELECT * FROM Events WHERE personID = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, personID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Event event = new Event(rs.getString("eventID"), rs.getString("associatedUsername"),
+                        rs.getString("personID"), rs.getFloat("latitude"), rs.getFloat("longitude"),
+                        rs.getString("country"), rs.getString("city"), rs.getString("eventType"),
+                        rs.getInt("year"));
+                events.add(event);
+            }
+            return events;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding event");
+        }
+    }
+
+    /**
+     * Finds oldest Event for a Person
+     * @param personID String
+     * @return oldest Event
+     * @throws DataAccessException
+     */
+    public int findOldestEventYearForPerson(String personID) throws DataAccessException {
+        //Event oldestEvent;
+        int oldestEventYear = 0;
+        ArrayList<Event> eventsForPerson = getEventsForPerson(personID);
+        for(int i = 0; i < eventsForPerson.size(); i++) {
+            if (eventsForPerson.get(i).getYear() > oldestEventYear) {
+                oldestEventYear = eventsForPerson.get(i).getYear();
+            }
+        }
+
+        return oldestEventYear;
     }
 
     /**
@@ -106,7 +193,7 @@ public class EventDao {
      * @throws DataAccessException
      */
     //TODO: TEST THIS
-    public void Delete(Person person) throws DataAccessException {
+    public void delete(Person person) throws DataAccessException {
         String sql = "DELETE FROM Events WHERE PersonID = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, person.getPersonID());

@@ -1,8 +1,10 @@
 package service;
 
+import dataAccess.AuthtokenDao;
 import dataAccess.DataAccessException;
 import dataAccess.Database;
 import dataAccess.UserDao;
+import model.Authtoken;
 import requestresult.LoginResult;
 import requestresult.LoginRequest;
 import requestresult.RegisterResult;
@@ -28,6 +30,7 @@ public class LoginService {
         try {
             Connection conn = db.getConnection();
             UserDao uDao = new UserDao(conn);
+            AuthtokenDao aDao = new AuthtokenDao(conn);
 
             if (uDao.find(r.getUsername()) != null) { //user registered?
                 if (uDao.validate(r.getUsername(), r.getPassword())) { //correct username/password?
@@ -35,6 +38,9 @@ public class LoginService {
                     String personID = uDao.userPersonID(r.getUsername()); //get user's personID
                     String authToken = UUID.randomUUID().toString(); //generate authtoken
                     result.setInfo(authToken, r.getUsername(), personID);//fill result with info
+
+                    Authtoken token = new Authtoken(authToken, r.getUsername()); //make new authtoken
+                    aDao.insert(token);//insert authtoken into DB TODO: maybe only allow one authtoken per user?
 
                     db.closeConnection(true);
                     result.setSuccess(true);

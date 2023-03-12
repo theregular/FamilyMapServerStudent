@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 import com.sun.net.httpserver.*;
 import com.google.gson.Gson;
+import requestresult.OneEventResult;
+import service.OneEventService;
 
 
 public class OneEventHandler extends Handler {
@@ -11,7 +13,24 @@ public class OneEventHandler extends Handler {
     public void handle(HttpExchange exchange) throws IOException {
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("get")) {
+                Headers reqHeaders = exchange.getRequestHeaders();
+                if (reqHeaders.containsKey("Authorization")) {
+                    String authToken = reqHeaders.getFirst("Authorization");
+                    String urlPath = exchange.getRequestURI().toString();
+                    String eventID = urlPath.replace("/event/", ""); //delete /event/ from file path to leave eventID
 
+                    OneEventService service = new OneEventService();
+                    OneEventResult result = service.getEvent(authToken, eventID);
+                    String resData = gson.toJson(result);
+
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+
+                    OutputStream resBody = exchange.getResponseBody();
+                    writeString(resData, resBody);
+
+                    resBody.close();
+                    success = true;
+                }
             }
             if (!success) {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

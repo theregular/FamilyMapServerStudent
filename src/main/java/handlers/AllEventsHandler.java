@@ -1,7 +1,9 @@
 package handlers;
 
 import com.google.gson.Gson;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
+import requestresult.AllEventsResult;
 import requestresult.Result;
 import service.AllEventsService;
 
@@ -12,25 +14,27 @@ import java.net.HttpURLConnection;
 public class AllEventsHandler extends Handler  {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        boolean success = false;
+        success = false;
         try {
-            if (exchange.getRequestMethod().toLowerCase().equals("post")) {
+            if (exchange.getRequestMethod().toLowerCase().equals("get")) {
+                Headers reqHeaders = exchange.getRequestHeaders();
+                if (reqHeaders.containsKey("Authorization")) {
+                    String authToken = reqHeaders.getFirst("Authorization");
 
-                AllEventsService events = new AllEventsService();
-                Result result = events.getAllEvents();
+                    AllEventsService service = new AllEventsService();
+                    AllEventsResult result = service.getAllEvents(authToken);
 
-                Gson gson = new Gson();
-                String responseStr = gson.toJson(result);
+                    gson = new Gson();
+                    String responseStr = gson.toJson(result);
 
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
-                OutputStream respBody = exchange.getResponseBody();
-                writeString(responseStr, respBody);
+                    OutputStream respBody = exchange.getResponseBody();
+                    writeString(responseStr, respBody);
 
-                exchange.getResponseBody().close();
-                success = true;
-
-
+                    exchange.getResponseBody().close();
+                    success = true;
+                }
             }
             if (!success) {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);

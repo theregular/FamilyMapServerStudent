@@ -11,8 +11,6 @@ public class OnePersonResult extends Result{
     private String fatherID; //[OPTIONAL, can be missing]
     private String motherID; //[OPTIONAL, can be missing]
     private String spouseID; //[OPTIONAL, can be missing]
-    private boolean success;
-    private String message;
 
 
     /**

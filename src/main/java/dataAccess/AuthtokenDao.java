@@ -25,16 +25,19 @@ public class AuthtokenDao {
 
     /**
      * Inserts a new authtoken and username into the database
-     * @param authtoken Authtoken object
+     * @param token Authtoken object
      * @throws DataAccessException
      */
 
     //need authToken to be separate object? Maybe not, maybe just two strings?
-    public void insert(Authtoken authtoken) throws DataAccessException {
-        String sql = "INSERT INTO Authtokens (AuthToken, Username) VALUES(?,?)";
+    public void insert(Authtoken token) throws DataAccessException {
+        String sql = "INSERT INTO Authtokens (Authtoken, username) VALUES(?,?)";
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, authtoken.getAuthToken());
-            stmt.setString(2, authtoken.getUsername());
+            stmt.setString(1, token.getAuthToken());
+            stmt.setString(2, token.getUsername());
+
+            stmt.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();

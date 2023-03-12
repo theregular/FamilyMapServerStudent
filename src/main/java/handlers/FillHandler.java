@@ -17,22 +17,30 @@ public class FillHandler extends Handler {
                 String urlPath = exchange.getRequestURI().toString();
 
                 //parse out info
-                String unAndGens = urlPath.replace("/fill/", "");
-                int splitIndex = unAndGens.indexOf('/');
-                String username = unAndGens.substring(0,splitIndex); //TODO: address case where no numGens is provided
-                String generations = unAndGens.replace(username + "/", "");
-                //System.out.println(urlPath);
-                //System.out.println(unAndGens);
-                //System.out.println(username);
-                //System.out.println(generations);
-
-                if(generations.isEmpty()) { //default generations
+                String noFill = urlPath.replace("/fill/", "");
+                String generations;
+                String username;
+                if (noFill.contains("/")) {
+                    int splitIndex = noFill.indexOf('/');
+                    username = noFill.substring(0,splitIndex);
+                    generations = noFill.replace(username + "/", "");
+                }
+                else {
+                    username = noFill;
                     generations = "4";
                 }
+                System.out.println(urlPath);
+                System.out.println(noFill);
+                System.out.println(username);
+                System.out.println(generations);
 
                 FillService service = new FillService();
                 FillResult result = service.fill(username, Integer.parseInt(generations)); //fill tree
                 String resData = gson.toJson(result);
+
+                //System.out.println("made it past fill");
+
+
 
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 

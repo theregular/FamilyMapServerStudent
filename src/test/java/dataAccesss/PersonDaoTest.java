@@ -50,10 +50,10 @@ public class PersonDaoTest {
     @Test
     public void findPass() throws DataAccessException {
         pDao.insert(bestPerson);
-        Person foundEvent = pDao.find(bestPerson.getPersonID());
+        Person foundPerson = pDao.find(bestPerson.getPersonID());
 
-        assertNotNull(foundEvent);
-        assertEquals(bestPerson, foundEvent);
+        assertNotNull(foundPerson);
+        assertEquals(bestPerson, foundPerson);
     }
 
     @Test
@@ -62,6 +62,25 @@ public class PersonDaoTest {
 
         //assertThrows(DataAccessException.class, () -> eDao.find("Biking_123B"));
         Person foundPerson = pDao.find("Biking_123B");
+        assertNotEquals(bestPerson,foundPerson);
+        assertNull(foundPerson);
+    }
+
+    @Test
+    public void findwUNPass() throws DataAccessException {
+        pDao.insert(bestPerson);
+        Person foundPerson = pDao.find(bestPerson.getAssociatedUsername(), bestPerson.getPersonID());
+
+        assertNotNull(foundPerson);
+        assertEquals(bestPerson, foundPerson);
+    }
+
+    @Test
+    public void findwUNFail() throws DataAccessException {
+        pDao.insert(bestPerson);
+
+        //assertThrows(DataAccessException.class, () -> eDao.find("Biking_123B"));
+        Person foundPerson = pDao.find("bungus", bestPerson.getPersonID());
         assertNotEquals(bestPerson,foundPerson);
         assertNull(foundPerson);
     }

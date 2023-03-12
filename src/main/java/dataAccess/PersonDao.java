@@ -57,6 +57,28 @@ public class PersonDao {
      * @return Person object
      * @throws DataAccessException
      */
+    public Person find(String username, String personID) throws DataAccessException {
+        Person person;
+        ResultSet rs;
+        String sql = "SELECT * FROM Persons WHERE personID = ? AND associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, personID);
+            stmt.setString(2, username);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                person = new Person(rs.getString("PersonID"), rs.getString("AssociatedUsername"), rs.getString("FirstName"), rs.getString("LastName"),
+                        rs.getString("Gender"), rs.getString("FatherID"), rs.getString("MotherID"), rs.getString("SpouseID"));
+                return person;
+            } else {
+                //System.out.println("PERSON NOT FOUND IN RESULT SET");
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding a person in the database");
+        }
+    }
+
     public Person find(String personID) throws DataAccessException {
         Person person;
         ResultSet rs;
@@ -84,23 +106,38 @@ public class PersonDao {
      * @return List of Person Objects
      * @throws DataAccessException
      */
-    //TODO:IMPLEMENT THIS
-    public List<Person> getPersonsForUser(String username) throws DataAccessException {
-        List<Person> persons = new ArrayList<>();
+    public Person[] getPersonsForUser(String username) throws DataAccessException {
+        ArrayList<Person> personsArrayList = new ArrayList<>();
+        ResultSet rs;
+        String sql = "SELECT * FROM Persons WHERE associatedUsername = ?;";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Person person = new Person(rs.getString("PersonID"), rs.getString("AssociatedUsername"), rs.getString("FirstName"), rs.getString("LastName"),
+                        rs.getString("Gender"), rs.getString("FatherID"), rs.getString("MotherID"), rs.getString("SpouseID"));
+                personsArrayList.add(person);
+            }
+            Person[] persons = new Person[personsArrayList.size()];
+            persons = personsArrayList.toArray(persons);
+            return persons;
 
-        return persons;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while finding persons");
+        }
     }
 
     /**
-     * Deletes all persons associated with a User
-     * @param user User object
+     * Deletes all persons associated with a username
+     * @param username String
      * @throws DataAccessException
      */
     //TODO: TEST THIS
-    public void Delete(User user) throws DataAccessException {
+    public void delete(String username) throws DataAccessException {
         String sql = "DELETE FROM Persons WHERE AssociatedUsername = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, user.getUsername());
+            stmt.setString(1, username);
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             throw new DataAccessException("SQL Error encountered while deleting persons associated with user");

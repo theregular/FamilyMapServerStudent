@@ -1,8 +1,10 @@
 package service;
 
+import dataAccess.AuthtokenDao;
 import dataAccess.DataAccessException;
 import dataAccess.Database;
 import dataAccess.PersonDao;
+import model.Authtoken;
 import model.Person;
 import requestresult.OnePersonResult;
 
@@ -15,17 +17,29 @@ public class OnePersonService {
     /** One Person Service
      * @return OnePersonResult Object
      */
-    public OnePersonResult getPerson(String personID) {
+    public OnePersonResult getPerson(String authtoken, String personID) {
         OnePersonResult result = new OnePersonResult(false);
         Database db = new Database();
         try {
             //connect DAO to database
             Connection conn = db.getConnection();
-            PersonDao pDao = new PersonDao(conn);
+            //get username from authtoken
+            AuthtokenDao aDao = new AuthtokenDao(conn);
+            Authtoken token = aDao.find(authtoken);
+            if (token == null) {
+                throw new DataAccessException("Invalid authtoken");
+            }
+            String username = token.getUsername();
+            //System.out.println(authtoken);
+            //System.out.println(username);
 
             //find person
-            Person person = pDao.find(personID);
+            PersonDao pDao = new PersonDao(conn);
+            Person person = pDao.find(username, personID);
             if (person != null) {
+                //System.out.println("Person not null");
+                //System.out.println(person);
+
                 //fill result with person info
                 result.setInfo(person.getPersonID(), person.getAssociatedUsername(), person.getFirstName(), person.getLastName(), person.getGender());
                 //sets fatherID, motherID, spouseID if not null
