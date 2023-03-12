@@ -35,6 +35,8 @@ public class FillService {
     private String[] mnames;
     private String[] snames;
     private Location[] locations;
+    private int numPersons = 0;
+    private int numEvents = 0;
 
     int persons = 0;
     int events = 0;
@@ -42,7 +44,7 @@ public class FillService {
     /** Constructor
      * gets json data to generate with
      */
-    public FillService() throws FileNotFoundException{
+    public FillService() throws FileNotFoundException {
         try {
             FileReader fileReader = new FileReader("json\\fnames.json");
             fData = gson.fromJson(fileReader, FemaleNamesData.class);
@@ -72,8 +74,7 @@ public class FillService {
      * @return FillResult Object
      */
 
-    //TODO: change X person and Y events to actually update
-    //TODO: test handling deleting data if a user already has data associated with their username
+    //TODO: fix marriage year sometimes being too young
 
     public FillResult fill(String username, int generations) {
             FillResult result = new FillResult(false);
@@ -82,8 +83,12 @@ public class FillService {
             try {
                     conn = db.getConnection();
 
-                    /*
-                    //get all persons associated with username from D
+                    //establish connections
+                    uDao = new UserDao(conn);
+                    pDao = new PersonDao(conn);
+                    eDao = new EventDao(conn);
+
+                    //get all persons associated with username from DB
                     persons = pDao.getPersonsForUser(username);
                     if (persons.length != 0) {
                         //delete all events associated with each person
@@ -93,12 +98,12 @@ public class FillService {
                         //delete all persons associated with username
                         pDao.delete(username);
                     }
-*/
+
                     generate(username, generations); //method to add persons to DB by username and # of generations
 
                     db.closeConnection(true);
                     result.setSuccess(true);
-                    result.setMessage("Successfully added \"X\" persons and \"Y\" events to the database.");
+                    result.setMessage("Successfully added " + numPersons + " persons and " + numEvents + " events to the database.");
 
             } catch (DataAccessException e) {
                 db.closeConnection(false);
@@ -114,10 +119,6 @@ public class FillService {
      * Generates family history data
      */
     public void generate(String username, int generations) throws DataAccessException{
-        //establish connections
-        uDao = new UserDao(conn);
-        pDao = new PersonDao(conn);
-        eDao = new EventDao(conn);
 
         //check if generations is valid
         if (generations >= 0 && generations <= 10) {
@@ -127,11 +128,12 @@ public class FillService {
                 //make Person for User
                 Person userPerson = new Person(user.getPersonID(), user.getUsername(), user.getFirstName(),
                         user.getLastName(), user.getGender());
+                numPersons++;
 
                 //generate Birth Event for User Person
                 int birthYear = 2023 - randomNumber(80); //get random year for user to be born
                 Event userBirthEvent = generateBirthEvent(userPerson, birthYear);
-
+                numEvents++;
 
                 if (generations != 0) {
                     //generate parents for User
@@ -189,6 +191,8 @@ public class FillService {
                     int marriageYear = generateMarriageYear(fatherBirthEvent.getYear(), motherBirthEvent.getYear());
                     Event fatherMarriageEvent = generateMarriageEvent(father, marriageLocation, marriageYear);
                     Event motherMarriageEvent = generateMarriageEvent(mother, marriageLocation, marriageYear);
+                    numEvents++;
+                    numEvents++;
 
 
                     //add death events for father and mother
@@ -204,6 +208,8 @@ public class FillService {
 
                     Event fatherDeathEvent = generateDeathEvent(father, deathYearF);
                     Event motherDeathEvent = generateDeathEvent(mother, deathYearM);
+                    numEvents++;
+                    numEvents++;
 
                     //add father and mother ID to userPerson
                     userPerson.setFatherID(father.getPersonID());
@@ -247,6 +253,7 @@ public class FillService {
         //ArrayList<Object> returnStuff = new ArrayList<>(); //weird idea
         HashMap<String, Object> returnStuff = new HashMap<>(); //weird idea 2
         String newPersonID = UUID.randomUUID().toString();
+        numPersons++;
         String firstName = null;
         String lastName;
 
@@ -267,7 +274,7 @@ public class FillService {
         //make birth event
         int birthYear = generateBirthYear(childBirthYear);
         Event newPersonBirthEvent = generateBirthEvent(newPerson, birthYear);
-
+        numEvents++;
         //weird idea
         //returnStuff.add(newPersonBirthEvent); //birth event is first item in ArrayList
         returnStuff.put("birth", newPersonBirthEvent); //add to map of return stuff
@@ -335,6 +342,8 @@ public class FillService {
             int marriageYear = generateMarriageYear(fatherBirthEvent.getYear(), motherBirthEvent.getYear());
             Event fatherMarriageEvent = generateMarriageEvent(father, marriageLocation, marriageYear);
             Event motherMarriageEvent = generateMarriageEvent(mother, marriageLocation, marriageYear);
+            numEvents++;
+            numEvents++;
 
             //add death events for father and mother
             int oldestEventYearF = eDao.findOldestEventYearForPerson(father.getPersonID());
@@ -345,6 +354,8 @@ public class FillService {
 
             Event fatherDeathEvent = generateDeathEvent(father, deathYearF);
             Event motherDeathEvent = generateDeathEvent(mother, deathYearM);
+            numEvents++;
+            numEvents++;
 
             //add father and mother ID to newPerson
             newPerson.setFatherID(father.getPersonID());

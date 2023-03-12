@@ -68,6 +68,30 @@ public class UserDaoTest {
     }
 
     @Test
+    public void validatePass() throws DataAccessException {
+        uDao.insert(bestUser);
+
+        boolean successful = uDao.validate("jameson12", "dogs0987654321");
+
+        assertTrue(successful);
+
+    }
+
+    @Test
+    public void validateFail() throws DataAccessException {
+        uDao.insert(bestUser);
+        boolean successful = uDao.validate(bestUser.getUsername(), "wrongpassword");
+        assertFalse(successful);
+
+        successful = uDao.validate("wrongusername", bestUser.getUsername());
+        assertFalse(successful);
+
+        successful = uDao.validate("wrongusername", "wrongpassword");
+        assertFalse(successful);
+    }
+
+
+    @Test
     public void clearPass() throws DataAccessException {
         uDao.insert(bestUser);
         uDao.clear();

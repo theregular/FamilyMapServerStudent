@@ -11,7 +11,7 @@ import java.sql.Connection;
 /**
  * Processes OneEvent requests and results
  */
-public class OneEventService {
+public class OneEventService  {
     /** One Event Service
      * @return OneEventResult Object
      */

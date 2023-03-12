@@ -7,6 +7,7 @@ import model.User;
 import requestresult.RegisterRequest;
 import requestresult.RegisterResult;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.util.UUID;
 
@@ -48,12 +49,19 @@ public class RegisterService {
                     Authtoken token = new Authtoken(authToken, newUser.getUsername());
                     aDao.insert(token); //insert Authtoken into Database //TODO: maybe only allow one authtoken per user?
 
-
-                    //generate new Data for user -- use FillService?
-
-
                     db.closeConnection(true);
                     result.setSuccess(true);
+
+                    //generate new Data for user -- use FillService?
+                    try {
+                        FillService service = new FillService();
+                        service.fill(newUser.getUsername(), 4);
+                    }
+                    catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        throw new DataAccessException("Problem reading JSON files for data generation");
+                    }
+
                 } else {
                     throw new DataAccessException("Please enter m or f for gender");
                 }

@@ -6,11 +6,13 @@ import dataAccess.DataAccessException;
 
 import model.Event;
 
+import model.Person;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EventDaoTest {
     private Database db;
     private Event bestEvent;
+    private Event bestEvent2;
+    private Event bestEvent3;
+    private Event[] bestEvents;
+
+    private Person bestPerson;
+    private Person otherPerson;
     private EventDao eDao;
 
     @BeforeEach
@@ -28,7 +36,24 @@ public class EventDaoTest {
         // and a new event with random data
         bestEvent = new Event("Biking_123A", "Gale", "Gale123A",
                 35.9f, 140.1f, "Japan", "Ushiku",
-                "Biking_Around", 2016);
+                "Biking_Around", 2000);
+        bestEvent2 = new Event("Biking_123B", "Gale", "Gale123A",
+                35.9f, 140.1f, "Provo", "Ushiku",
+                "Biking_Stuff", 2020);
+        bestEvent3 = new Event("Biking_123C", "Gale", "Gale123A",
+                35.9f, 140.1f, "Nepal", "Ushiku",
+                "Biking_Up", 2002);
+
+        bestEvents = new Event[3];
+        bestEvents[0] = bestEvent;
+        bestEvents[1] = bestEvent2;
+        bestEvents[2] = bestEvent3;
+
+        bestPerson = new Person("Gale123A","Gale","Jameson",
+                "Jackson","M","321ABC","123CBA","456DEF");
+
+        otherPerson = new Person("Gale1234","Gale","Jameson",
+                "Jackson","M","321ABC","123CBA","456DEF");
 
         // Here, we'll open the connection in preparation for the test case to use it
         Connection conn = db.getConnection();
@@ -96,6 +121,137 @@ public class EventDaoTest {
         Event testEvent = eDao.find("Biking_123B");
         assertNotEquals(bestEvent,testEvent);
         assertNull(testEvent);
+    }
+
+    @Test
+    public void findwUNPass() throws DataAccessException {
+        eDao.insert(bestEvent);
+        Event foundEvent = eDao.find(bestEvent.getAssociatedUsername(), bestEvent.getEventID());
+
+        assertNotNull(foundEvent);
+        assertEquals(bestEvent, foundEvent);
+    }
+
+    @Test
+    public void findwUNFail() throws DataAccessException {
+        eDao.insert(bestEvent);
+
+        //assertThrows(DataAccessException.class, () -> eDao.find("Biking_123B"));
+        Event foundEvent = eDao.find("bungus", bestEvent.getEventID());
+        assertNotEquals(bestEvent,foundEvent);
+    }
+
+    @Test
+    public void getEventsForUserPass() throws DataAccessException {
+        //eDao.insert(bestEvent);
+        //eDao.insert(bestEvent2);
+        //eDao.insert(bestEvent3);
+        for (Event event : bestEvents) {
+            eDao.insert(event);
+        }
+        Event[] eventsFound = eDao.getEventsForUser("Gale");
+
+        assertNotNull(eventsFound);
+        for (int i = 0; i < eventsFound.length; i++) {
+            assertEquals(bestEvents[i],eventsFound[i]);
+        }
+    }
+
+    @Test
+    public void getEventsForUserFail() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.insert(bestEvent2);
+        //eDao.insert(bestEvent3);
+        /*
+        for (Event event : bestEvents) {
+            eDao.insert(event);
+        }
+         */
+
+        Event[] eventsFound = eDao.getEventsForUser("Gale");
+
+        assertNotNull(eventsFound);
+        assertNotEquals(bestEvents, eventsFound);
+    }
+
+    @Test
+    public void getEventsForPersonPass() throws DataAccessException {
+        //eDao.insert(bestEvent);
+        //eDao.insert(bestEvent2);
+        //eDao.insert(bestEvent3);
+        for (Event event : bestEvents) {
+            eDao.insert(event);
+        }
+        ArrayList<Event> eventsFound = eDao.getEventsForPerson("Gale123A");
+
+        assertNotNull(eventsFound);
+        for (int i = 0; i < eventsFound.size(); i++) {
+            assertEquals(bestEvents[i],eventsFound.get(i));
+        }
+    }
+
+    @Test
+    public void getEventsForPersonFail() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.insert(bestEvent2);
+        //eDao.insert(bestEvent3);
+        /*
+        for (Event event : bestEvents) {
+            eDao.insert(event);
+        }
+         */
+
+        ArrayList<Event> eventsFound = eDao.getEventsForPerson("Gale123A");
+
+        Event[] eventsFoundArr = new Event[eventsFound.size()];
+        eventsFoundArr = eventsFound.toArray(eventsFoundArr);
+
+        assertNotNull(eventsFound);
+        assertNotEquals(bestEvents, eventsFoundArr);
+    }
+
+    @Test
+    public void findOldestEventYearForPersonPass() throws DataAccessException {
+        for (Event event : bestEvents) {
+            eDao.insert(event);
+        }
+
+        int oldestEventYear = bestEvent2.getYear();
+
+        int oldestEventYearFound = eDao.findOldestEventYearForPerson("Gale123A");
+
+        assertEquals(oldestEventYear, oldestEventYearFound);
+    }
+
+    @Test
+    public void findOldestEventYearForPersonFail() throws DataAccessException {
+        for (Event event : bestEvents) {
+            eDao.insert(event);
+        }
+
+        int oldestEventYear = bestEvent3.getYear(); //2002
+
+        int oldestEventYearFound = eDao.findOldestEventYearForPerson("Gale123A"); //should be 2020
+
+        assertFalse(oldestEventYear > oldestEventYearFound);
+    }
+
+    @Test
+    public void deletePass() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.delete(bestPerson);
+
+        Event testEvent = eDao.find(bestEvent.getEventID());
+        assertNull(testEvent);
+    }
+
+    @Test
+    public void deleteFail() throws DataAccessException {
+        eDao.insert(bestEvent);
+        eDao.delete(otherPerson);
+
+        Event testEvent = eDao.find(bestEvent.getEventID());
+        assertEquals(bestEvent,testEvent);
     }
 
     @Test

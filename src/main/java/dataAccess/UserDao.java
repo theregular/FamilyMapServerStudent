@@ -101,6 +101,7 @@ public class UserDao {
         return password.equals(foundPassword);
     }
 
+    /*
     public String userPersonID(String username) throws DataAccessException {
         String personID;
         ResultSet rs;
@@ -120,6 +121,8 @@ public class UserDao {
         }
         return personID;
     }
+
+     */
 
     /**
      * Clears the database of all Users

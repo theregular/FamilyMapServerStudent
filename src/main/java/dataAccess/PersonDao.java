@@ -138,7 +138,7 @@ public class PersonDao {
         String sql = "DELETE FROM Persons WHERE AssociatedUsername = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException("SQL Error encountered while deleting persons associated with user");
         }

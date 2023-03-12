@@ -141,12 +141,14 @@ public class EventDao {
         }
     }
 
+
     /**
      * Returns a list of all events associated with a personID
      * @param personID String
      * @return List of Event objects
      * @throws DataAccessException
      */
+
     public ArrayList<Event> getEventsForPerson(String personID) throws DataAccessException {
         ArrayList<Event> events = new ArrayList<>();
         ResultSet rs;
@@ -167,6 +169,7 @@ public class EventDao {
             throw new DataAccessException("Error encountered while finding event");
         }
     }
+
 
     /**
      * Finds oldest Event for a Person
@@ -197,9 +200,9 @@ public class EventDao {
         String sql = "DELETE FROM Events WHERE PersonID = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, person.getPersonID());
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccessException("SQL Error encountered while deleting person");
+            throw new DataAccessException("SQL Error encountered while deleting event");
         }
     }
 

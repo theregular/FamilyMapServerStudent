@@ -5,10 +5,12 @@ import dataAccess.DataAccessException;
 import dataAccess.Database;
 import dataAccess.UserDao;
 import model.Authtoken;
+import model.User;
 import requestresult.LoginResult;
 import requestresult.LoginRequest;
 import requestresult.RegisterResult;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.UUID;
 
@@ -24,7 +26,9 @@ public class LoginService {
      * @param r LoginRequest Object
      * @return LoginResult Object
      */
-    public LoginResult login(LoginRequest r) { //TODO: add authtoken to database? need to add other stuff to database?
+
+    //TODO: address fail cases of typo stuff/missing info
+    public LoginResult login(LoginRequest r) {
         LoginResult result = new LoginResult(false);
         Database db = new Database();
         try {
@@ -32,10 +36,11 @@ public class LoginService {
             UserDao uDao = new UserDao(conn);
             AuthtokenDao aDao = new AuthtokenDao(conn);
 
-            if (uDao.find(r.getUsername()) != null) { //user registered?
+            User user = uDao.find(r.getUsername());
+            if (user != null) { //user registered?
                 if (uDao.validate(r.getUsername(), r.getPassword())) { //correct username/password?
 
-                    String personID = uDao.userPersonID(r.getUsername()); //get user's personID
+                    String personID = user.getPersonID(); //get user's personID
                     String authToken = UUID.randomUUID().toString(); //generate authtoken
                     result.setInfo(authToken, r.getUsername(), personID);//fill result with info
 
