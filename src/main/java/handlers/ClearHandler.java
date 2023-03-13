@@ -20,14 +20,15 @@ public class ClearHandler extends Handler {
 
                 result = service.clear();
 
-                //Gson gson = new Gson();
+                if (result.isSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                }
                 String resData = gson.toJson(result);
-
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-
                 OutputStream resBody = exchange.getResponseBody();
                 writeString(resData, resBody);
-
                 resBody.close();
                 success = true;
             }

@@ -9,13 +9,13 @@ public class AllPersonsResult extends Result {
         this.success = success;
     }
 
-    private Person[] persons;
+    private Person[] data;
 
     public Person[] getPersons() {
-        return persons;
+        return data;
     }
 
     public void setPersons(Person[] persons) {
-        this.persons = persons;
+        this.data = persons;
     }
 }

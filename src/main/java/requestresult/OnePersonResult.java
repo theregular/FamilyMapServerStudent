@@ -10,7 +10,7 @@ public class OnePersonResult extends Result{
     private String gender;
     private String fatherID; //[OPTIONAL, can be missing]
     private String motherID; //[OPTIONAL, can be missing]
-    private String spouseID; //[OPTIONAL, can be missing]
+    private String spouse; //[OPTIONAL, can be missing]
 
 
     /**
@@ -25,7 +25,7 @@ public class OnePersonResult extends Result{
         this.gender = null;
         this.fatherID = null;
         this.motherID = null;
-        this.spouseID = null;
+        this.spouse = null;
         this.success = success;
         this.message = null;
     }
@@ -39,6 +39,7 @@ public class OnePersonResult extends Result{
      * @param gender
      */
     public void setInfo(String associatedUsername, String personID, String firstName, String lastName, String gender) {
+        this.associatedUsername = associatedUsername;
         this.personID = personID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,6 +55,6 @@ public class OnePersonResult extends Result{
     }
 
     public void setSpouseID(String spouseID) {
-        this.spouseID = spouseID;
+        this.spouse = spouseID;
     }
 }

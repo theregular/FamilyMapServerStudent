@@ -9,13 +9,13 @@ public class AllEventsResult extends Result {
     public AllEventsResult(boolean success) {
         this.success = success;
     }
-    private Event[] events;
+    private Event[] data;
 
     public Event[] getEvents() {
-        return events;
+        return data;
     }
 
     public void setEvents(Event[] events) {
-        this.events = events;
+        this.data = events;
     }
 }

@@ -3,6 +3,7 @@ package handlers;
 import java.io.*;
 import java.net.*;
 import com.sun.net.httpserver.*;
+import dataAccess.DataAccessException;
 import requestresult.LoginRequest;
 import requestresult.LoginResult;
 import service.LoginService;
@@ -19,13 +20,15 @@ public class LoginHandler extends Handler {
                 LoginRequest request = gson.fromJson(reqData, LoginRequest.class);
                 LoginService service = new LoginService();
                 LoginResult result = service.login(request); //login user
+                if (result.isSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                }
                 String resData = gson.toJson(result);
-
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-
                 OutputStream resBody = exchange.getResponseBody();
                 writeString(resData, resBody);
-
                 resBody.close();
                 success = true;
             }

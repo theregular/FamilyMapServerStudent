@@ -22,17 +22,20 @@ public class AllEventsHandler extends Handler  {
                     String authToken = reqHeaders.getFirst("Authorization");
 
                     AllEventsService service = new AllEventsService();
+
+
                     AllEventsResult result = service.getAllEvents(authToken);
 
-                    gson = new Gson();
-                    String responseStr = gson.toJson(result);
-
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-
-                    OutputStream respBody = exchange.getResponseBody();
-                    writeString(responseStr, respBody);
-
-                    exchange.getResponseBody().close();
+                    if (result.isSuccess()) {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    }
+                    else {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    }
+                    String resData = gson.toJson(result);
+                    OutputStream resBody = exchange.getResponseBody();
+                    writeString(resData, resBody);
+                    resBody.close();
                     success = true;
                 }
             }

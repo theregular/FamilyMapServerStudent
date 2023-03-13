@@ -8,7 +8,7 @@ import java.nio.file.FileSystems;
 
 import com.sun.net.httpserver.*;
 
-public class FileHandler implements HttpHandler {
+public class FileHandler extends Handler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
@@ -17,6 +17,9 @@ public class FileHandler implements HttpHandler {
                 File file;
                 if (urlPath.equals(null) || urlPath.equals("/")) {
                     urlPath = "web/index.html";
+                }
+                else {
+                    urlPath = "web/" + urlPath;
                 }
                 file = new File(urlPath);
 
@@ -35,7 +38,10 @@ public class FileHandler implements HttpHandler {
                     respBody.close();
                 }
             }
-
+            if (!success) {
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                exchange.getResponseBody().close();
+            }
         } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();

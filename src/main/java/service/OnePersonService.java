@@ -41,7 +41,7 @@ public class OnePersonService {
                 //System.out.println(person);
 
                 //fill result with person info
-                result.setInfo(person.getPersonID(), person.getAssociatedUsername(), person.getFirstName(), person.getLastName(), person.getGender());
+                result.setInfo(person.getAssociatedUsername(), person.getPersonID(), person.getFirstName(), person.getLastName(), person.getGender());
                 //sets fatherID, motherID, spouseID if not null
                 if (person.getFatherID() != null) {
                     result.setFatherID(person.getFatherID());

@@ -26,13 +26,15 @@ public class LoadHandler extends Handler {
                 LoadRequest request = gson.fromJson(reqData, LoadRequest.class);
                 LoadService service = new LoadService();
                 LoadResult result = service.load(request);
+                if (result.isSuccess()) {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                }
+                else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                }
                 String resData = gson.toJson(result);
-
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-
                 OutputStream resBody = exchange.getResponseBody();
                 writeString(resData, resBody);
-
                 resBody.close();
                 success = true;
             }

@@ -296,11 +296,11 @@ public class FillService {
 */
                 //weird idea stuff
                 fatherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "m",
-                        newPerson.getLastName(), childBirthYear);
+                        newPerson.getLastName(), birthYear);
                 father = (Person)fatherStuff.get("person"); //gets father Person from map
 
                 motherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "f",
-                        newPerson.getLastName(), childBirthYear);
+                        newPerson.getLastName(), birthYear);
                 mother = (Person)motherStuff.get("person"); //gets mother Person from map
 
 
@@ -320,11 +320,11 @@ public class FillService {
                 //weird idea stuff
 
                 fatherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "m",
-                        newLastName, childBirthYear);
+                        newLastName, birthYear);
                 father = (Person)fatherStuff.get("person"); //gets father Person from map
 
                 motherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "f",
-                        newLastName, childBirthYear);
+                        newLastName, birthYear);
                 mother = (Person)motherStuff.get("person"); //gets mother Person from map
 
 
@@ -445,7 +445,7 @@ public class FillService {
         while (year < 13) {
             year += randomNumber(7);
         }
-        if (husbandBirthYear < wifeBirthYear) {
+        if (husbandBirthYear > wifeBirthYear) {
             return year + husbandBirthYear;
         }
         else {
@@ -468,18 +468,20 @@ public class FillService {
     }
 
 
-/*
+
+    /*
     public static void main(String[] args) {
         try {
             FillService service = new FillService();
-            int deathYear = service.generateDeathYear( 2000, 2090);
-            System.out.println(deathYear);
-            System.out.println("died at: " + (deathYear - 2000));
+            int year = service.generateBirthYear(1984 );
+            System.out.println(year);
+            System.out.println("born: " + (year));
+            System.out.println("had child at: " + (1984 - year));
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-*/
+     */
 
 }
