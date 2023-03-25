@@ -195,7 +195,6 @@ public class EventDao {
      * @param person Person object
      * @throws DataAccessException
      */
-    //TODO: TEST THIS
     public void delete(Person person) throws DataAccessException {
         String sql = "DELETE FROM Events WHERE PersonID = ?;";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

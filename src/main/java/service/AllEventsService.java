@@ -29,8 +29,8 @@ public class AllEventsService {
                 throw new DataAccessException("Invalid authtoken");
             }
             String username = token.getUsername();
-            System.out.println(authtoken);
-            System.out.println(username);
+            //System.out.println(authtoken);
+            //System.out.println(username);
 
             //get events from username
             EventDao eDao = new EventDao(conn);

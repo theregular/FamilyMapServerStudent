@@ -33,9 +33,6 @@ public class OneEventService  {
             EventDao eDao = new EventDao(conn);
             Event event = eDao.find(username, eventID);
             if (event != null) {
-                //System.out.println("event not null");
-                //System.out.println(event);
-
                 //fill result with event info
                 result.setInfo(event.getEventID(), event.getAssociatedUsername(), event.getPersonID(), event.getLatitude(),
                         event.getLongitude(), event.getCountry(), event.getCity(), event.getEventType(), event.getYear());

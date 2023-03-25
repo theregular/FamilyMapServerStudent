@@ -22,7 +22,6 @@ public class LoadService {
      * @return LoadResult Object
      */
     public LoadResult load(LoadRequest r) {
-        //TODO: address fail cases of typo stuff/missing info
         LoadResult result = new LoadResult(false);
         Database db = new Database();
         try {

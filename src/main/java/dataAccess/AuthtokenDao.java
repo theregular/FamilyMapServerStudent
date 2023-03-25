@@ -70,8 +70,6 @@ public class AuthtokenDao {
         }
     }
 
-
-
     /**
      * Clears the database of all Authtokens
      * @throws DataAccessException

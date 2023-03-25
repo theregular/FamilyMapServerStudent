@@ -37,9 +37,6 @@ public class OnePersonService {
             PersonDao pDao = new PersonDao(conn);
             Person person = pDao.find(username, personID);
             if (person != null) {
-                //System.out.println("Person not null");
-                //System.out.println(person);
-
                 //fill result with person info
                 result.setInfo(person.getAssociatedUsername(), person.getPersonID(), person.getFirstName(), person.getLastName(), person.getGender());
                 //sets fatherID, motherID, spouseID if not null

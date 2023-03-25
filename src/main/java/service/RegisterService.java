@@ -24,11 +24,10 @@ public class RegisterService {
         RegisterResult result = new RegisterResult(false);
         Database db = new Database();
         try {
-            //TODO: address fail cases of typo stuff/missing info
             Connection conn = db.getConnection();
             UserDao uDao = new UserDao(conn);
             AuthtokenDao aDao = new AuthtokenDao(conn);
-            //PersonDao pDao = new PersonDao(conn);
+
             if(r.getUsername() == null || r.getPassword() == null  ||
                     r.getEmail() == null || r.getFirstName() == null ||
                     r.getLastName() == null || r.getGender() == null) {
@@ -52,12 +51,12 @@ public class RegisterService {
 
                     //make new Authtoken for User
                     Authtoken token = new Authtoken(authToken, newUser.getUsername());
-                    aDao.insert(token); //insert Authtoken into Database //TODO: maybe only allow one authtoken per user?
+                    aDao.insert(token); //insert Authtoken into Database //maybe only allow one authtoken per user in future?
 
                     db.closeConnection(true);
                     result.setSuccess(true);
 
-                    //generate new Data for user -- use FillService?
+                    //generate new Data for user using FillService
                     try {
                         FillService service = new FillService();
                         service.fill(newUser.getUsername(), 4);
@@ -66,7 +65,6 @@ public class RegisterService {
                         e.printStackTrace();
                         throw new DataAccessException("Problem reading JSON files for data generation");
                     }
-
                 } else {
                     throw new DataAccessException("Please enter m or f for gender");
                 }
@@ -83,10 +81,4 @@ public class RegisterService {
 
         return result;
     }
-
-    private void generateInfo() {
-        //TODO: add spot to generate family info here
-    }
-
-
 }

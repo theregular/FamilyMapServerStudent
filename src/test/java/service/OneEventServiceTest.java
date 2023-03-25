@@ -37,21 +37,21 @@ public class OneEventServiceTest {
             db.closeConnection(true);
     }
     @Test
-    public void successFindOneEvent() throws DataAccessException {
+    public void SuccessFindOneEvent() throws DataAccessException {
         result = service.getEvent("token123","Biking_123A");
         assertNotNull(result);
         assertTrue(result.isSuccess());
     }
 
     @Test
-    public void failedFindEventAuth() throws DataAccessException {
+    public void FailFindEventAuth() throws DataAccessException {
         result = service.getEvent("token123","wrongID");
         assertNotNull(result);
         assertFalse(result.isSuccess());
     }
 
     @Test
-    public void failedFindEventID() throws DataAccessException {
+    public void FailFindEventID() throws DataAccessException {
         result = service.getEvent("wrongAuth", "ID456");
         assertNotNull(result);
         assertFalse(result.isSuccess());

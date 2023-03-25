@@ -28,7 +28,7 @@ public class LoginService {
      */
 
     //TODO: address fail cases of typo stuff/missing info
-    public LoginResult login(LoginRequest r) { //throws DataAccessException {
+    public LoginResult login(LoginRequest r) {
         LoginResult result = new LoginResult(false);
         Database db = new Database();
         try {
@@ -66,7 +66,6 @@ public class LoginService {
             db.closeConnection(false);
             e.printStackTrace();
             result.setMessage("Error: " + e.getMessage());
-            //throw new DataAccessException("BAD REQUEST");
         }
 
         return result;

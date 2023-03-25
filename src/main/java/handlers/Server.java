@@ -35,7 +35,6 @@ public class Server {
         server.createContext("/load", new LoadHandler());
         server.createContext("/person", new AllPersonsHandler());
         server.createContext("/event", new AllEventsHandler());
-
         server.createContext("/person/", new OnePersonHandler());
         server.createContext("/event/", new OneEventHandler());
 

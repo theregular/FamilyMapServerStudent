@@ -46,16 +46,16 @@ public class FillService {
      */
     public FillService() throws FileNotFoundException {
         try {
-            FileReader fileReader = new FileReader("json\\fnames.json");
+            FileReader fileReader = new FileReader("json/fnames.json");
             fData = gson.fromJson(fileReader, FemaleNamesData.class);
 
-            fileReader = new FileReader("json\\mnames.json");
+            fileReader = new FileReader("json/mnames.json");
             mData = gson.fromJson(fileReader, MaleNamesData.class);
 
-            fileReader = new FileReader("json\\snames.json");
+            fileReader = new FileReader("json/snames.json");
             sData = gson.fromJson(fileReader, SurnamesData.class);
 
-            fileReader = new FileReader("json\\locations.json");
+            fileReader = new FileReader("json/locations.json");
             lData = gson.fromJson(fileReader, LocationData.class);
 
             fnames = fData.getData();
@@ -67,14 +67,11 @@ public class FillService {
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     /** Fill Service
      * @return FillResult Object
      */
-
-    //TODO: fix marriage year sometimes being too young
 
     public FillResult fill(String username, int generations) {
             FillResult result = new FillResult(false);
@@ -138,26 +135,6 @@ public class FillService {
                 if (generations != 0) {
                     //generate parents for User
 
-                    /*
-                    Person father = generatePerson(userPerson.getAssociatedUsername(), generations - 1, "m",
-                            userPerson.getLastName());
-                    Person mother = generatePerson(userPerson.getAssociatedUsername(), generations - 1, "f",
-                            userPerson.getLastName());
-*/
-
-
-
-                    //weird idea test
-                    /*
-                    ArrayList<Object> fatherStuff = generatePerson(userPerson.getAssociatedUsername(), generations - 1, "m",
-                            userPerson.getLastName(), birthYear);
-                    Person father = (Person)fatherStuff.get(1);
-                    ArrayList<Object> motherStuff = generatePerson(userPerson.getAssociatedUsername(), generations - 1, "f",
-                            userPerson.getLastName(), birthYear);
-                    Person mother = (Person)motherStuff.get(1);
-                     */
-
-                    //another weird idea test
                     HashMap<String, Object> fatherStuff = generatePerson(userPerson.getAssociatedUsername(), generations - 1, "m",
                             userPerson.getLastName(), birthYear);
                     Person father = (Person)fatherStuff.get("person"); //gets father Person from map
@@ -166,21 +143,9 @@ public class FillService {
                             userPerson.getLastName(), birthYear);
                     Person mother = (Person)motherStuff.get("person"); //gets mother Person from map
 
-
                     //add birth events for father and mother
-                    /*
-                    int fatherBirthYear = generateBirthYear(userBirthEvent.getYear());
-                    Event fatherBirthEvent = generateBirthEvent(father, fatherBirthYear);
-
-                    int motherBirthYear = generateBirthYear(userBirthEvent.getYear());
-                    Event motherBirthEvent = generateBirthEvent(mother, motherBirthYear);
-                    */
-
-                    //weird idea
-
                     Event fatherBirthEvent = (Event)fatherStuff.get("birth");
                     Event motherBirthEvent = (Event)motherStuff.get("birth");
-
 
                     //set father and mother as spouses
                     father.setSpouseID(mother.getPersonID());
@@ -194,17 +159,12 @@ public class FillService {
                     numEvents++;
                     numEvents++;
 
-
                     //add death events for father and mother
                     int oldestEventYearF = eDao.findOldestEventYearForPerson(father.getPersonID());
                     int deathYearF = generateDeathYear(fatherBirthEvent.getYear(), oldestEventYearF);
 
-
-
                     int oldestEventYearM = eDao.findOldestEventYearForPerson(father.getPersonID());
                     int deathYearM = generateDeathYear(motherBirthEvent.getYear(), oldestEventYearM);
-
-
 
                     Event fatherDeathEvent = generateDeathEvent(father, deathYearF);
                     Event motherDeathEvent = generateDeathEvent(mother, deathYearM);
@@ -215,12 +175,12 @@ public class FillService {
                     userPerson.setFatherID(father.getPersonID());
                     userPerson.setMotherID(mother.getPersonID());
 
-
                     //add father and mother to database
                     pDao.insert(father);
                     pDao.insert(mother);
 
                     //output testing
+                    /*
                     System.out.println("Generation: " + (generations - 1));
                     System.out.println("Father:" + "\n" + father);
                     System.out.println(fatherBirthEvent);
@@ -230,14 +190,12 @@ public class FillService {
                     System.out.println(motherBirthEvent);
                     System.out.println(motherMarriageEvent);
                     System.out.println(motherDeathEvent);
-
+                     */
                 }
 
-
-                System.out.println("Generation: " + generations + "\n" + userPerson);
+                //System.out.println("Generation: " + generations + "\n" + userPerson);
                 System.out.println(userBirthEvent);
                 pDao.insert(userPerson); //userPerson complete, insert into database (closes database in parent function)
-
             }
             else {
                 throw new DataAccessException("Invalid user/Please register user before using fill command!");
@@ -250,8 +208,7 @@ public class FillService {
 
 
     private HashMap<String, Object> generatePerson(String username, int generations, String gender, String prevlastName, int childBirthYear) throws DataAccessException {
-        //ArrayList<Object> returnStuff = new ArrayList<>(); //weird idea
-        HashMap<String, Object> returnStuff = new HashMap<>(); //weird idea 2
+        HashMap<String, Object> returnStuff = new HashMap<>();
         String newPersonID = UUID.randomUUID().toString();
         numPersons++;
         String firstName = null;
@@ -275,8 +232,6 @@ public class FillService {
         int birthYear = generateBirthYear(childBirthYear);
         Event newPersonBirthEvent = generateBirthEvent(newPerson, birthYear);
         numEvents++;
-        //weird idea
-        //returnStuff.add(newPersonBirthEvent); //birth event is first item in ArrayList
         returnStuff.put("birth", newPersonBirthEvent); //add to map of return stuff
 
         //generate parents for new Person
@@ -288,13 +243,7 @@ public class FillService {
 
             //same last name if male's parents
             if (newPerson.getGender().equals("m")) {
-/*
-                father = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "m",
-                        newPerson.getLastName());
-                mother = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "f",
-                        newPerson.getLastName());
-*/
-                //weird idea stuff
+
                 fatherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "m",
                         newPerson.getLastName(), birthYear);
                 father = (Person)fatherStuff.get("person"); //gets father Person from map
@@ -302,22 +251,11 @@ public class FillService {
                 motherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "f",
                         newPerson.getLastName(), birthYear);
                 mother = (Person)motherStuff.get("person"); //gets mother Person from map
-
-
-
             }
 
             //different last name if female's parents
-            String newLastName = snames[randomNumber(snames.length - 1)];
+            String newLastName = snames[randomNumber(snames.length - 1)]; //get random last name from JSON file
             if (newPerson.getGender().equals("f")) {
-/*
-                father = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "m",
-                        newLastName);
-                mother = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "f",
-                        newLastName);
-*/
-
-                //weird idea stuff
 
                 fatherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "m",
                         newLastName, birthYear);
@@ -326,10 +264,9 @@ public class FillService {
                 motherStuff = generatePerson(newPerson.getAssociatedUsername(), generations - 1, "f",
                         newLastName, birthYear);
                 mother = (Person)motherStuff.get("person"); //gets mother Person from map
-
-
             }
 
+            //get father and mother birth events from map
             Event fatherBirthEvent = (Event)fatherStuff.get("birth");
             Event motherBirthEvent = (Event)motherStuff.get("birth");
 
@@ -340,8 +277,8 @@ public class FillService {
             //add marriage events for father and mother
             Location marriageLocation = locations[randomNumber(locations.length - 1)];
             int marriageYear = generateMarriageYear(fatherBirthEvent.getYear(), motherBirthEvent.getYear());
-            Event fatherMarriageEvent = generateMarriageEvent(father, marriageLocation, marriageYear);
-            Event motherMarriageEvent = generateMarriageEvent(mother, marriageLocation, marriageYear);
+            generateMarriageEvent(father, marriageLocation, marriageYear);
+            generateMarriageEvent(mother, marriageLocation, marriageYear);
             numEvents++;
             numEvents++;
 
@@ -352,21 +289,21 @@ public class FillService {
             int oldestEventYearM = eDao.findOldestEventYearForPerson(father.getPersonID());
             int deathYearM = generateDeathYear(motherBirthEvent.getYear(), oldestEventYearM);
 
-            Event fatherDeathEvent = generateDeathEvent(father, deathYearF);
-            Event motherDeathEvent = generateDeathEvent(mother, deathYearM);
+            generateDeathEvent(father, deathYearF);
+            generateDeathEvent(mother, deathYearM);
             numEvents++;
             numEvents++;
 
             //add father and mother ID to newPerson
             newPerson.setFatherID(father.getPersonID());
             newPerson.setMotherID(mother.getPersonID());
-            //returnStuff.add(newPerson); //person is second item in ArrayList
-            //returnStuff.put("person", newPerson);
 
             //add completed father and mother to database
             pDao.insert(father);
             pDao.insert(mother);
 
+            //output testing
+            /*
             System.out.println("Generation: " + (generations - 1));
             System.out.println("Father:" + "\n" + father);
             System.out.println(fatherBirthEvent);
@@ -376,20 +313,12 @@ public class FillService {
             System.out.println(motherBirthEvent);
             System.out.println(motherMarriageEvent);
             System.out.println(motherDeathEvent);
+             */
         }
-        returnStuff.put("person", newPerson);
 
-        //return newPerson
+        returnStuff.put("person", newPerson); //put new person into map to return
         return returnStuff;
     }
-
-    /*
-    private Event generateEvent(Person person, String eventType) {
-        eventType = eventType.toLowerCase();
-        return null;
-    }
-
-     */
 
     private Event generateBirthEvent(Person person, int year) throws DataAccessException {
         String newEventID = UUID.randomUUID().toString(); //generate eventID
@@ -440,7 +369,6 @@ public class FillService {
     }
 
     private int generateMarriageYear(int husbandBirthYear, int wifeBirthYear) {
-
         int year = randomNumber(50);
         while (year < 13) {
             year += randomNumber(7);
@@ -468,7 +396,7 @@ public class FillService {
     }
 
 
-
+//testing
     /*
     public static void main(String[] args) {
         try {
